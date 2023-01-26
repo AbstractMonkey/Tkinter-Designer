@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.8, 3.9]
+        python-version: [3.9]
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python ${{ matrix.python-version }}
@@ -25,7 +25,9 @@ jobs:
 
       - name: Lint
         run: |
-          curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+          curl -sSL https://install.python-poetry.org | python3 -
+          # Broken legacy Poetry fetch cmd
+          #curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
           source $HOME/.poetry/env
           poetry install
           # stop the build if there are Python syntax errors or undefined 
@@ -55,7 +57,9 @@ jobs:
       
       - name: Version & Publish
         run: |
-          curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+          curl -sSL https://install.python-poetry.org | python3 -    
+          # Broken legacy Poetry fetch cmd
+          #curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
           source $HOME/.poetry/env && echo "Poetry directory sourced."
           # set version number equal to latest git tag
           poetry version $(git tag | tail -1)
